@@ -174,29 +174,28 @@ def train(**kwargs):
     
     train_model(start_epoch, eval_loss, (train_dl, valid_dl), optimizer, kwargs['base_path']+kwargs["checkpoint_path"], kwargs['base_path']+kwargs["best_model"])
 
-# @task.command()
-# # @click.option("--base_path", default="./", help="Base path to the project destination")
-# # @click.option('--src_test', default="dataset/src_test.txt", help="test source file path")
-# # @click.option('--tgt_test', default="dataset/tgt_test.txt", help="test target file path")
-# def test():
-#     print("Testing Model module executing...")
-#     logging.info(f"Test module invoked.")
-#     #_, _, _ = load_checkpt(kwargs['base_path']+kwargs["best_model"])
-#     checkpoint = torch.load('checkpoint/model_ckpt.pt')
-#     print(f"Model loaded.")
-#     model.eval()
-#     #load test_dataset as 
+@task.command()
+# @click.option("--base_path", default="./", help="Base path to the project destination")
+# @click.option('--src_test', default="dataset/src_test.txt", help="test source file path")
+# @click.option('--tgt_test', default="dataset/tgt_test.txt", help="test target file path")
+def test():
+    print("Testing Model module executing...")
+    logging.info(f"Test module invoked.")
+    #_, _, _ = load_checkpt(kwargs['base_path']+kwargs["best_model"])
+    checkpoint = torch.load('checkpoint/model_ckpt.pt')
+    print(f"Model loaded.")
+    model.eval()
+    #load test_dataset for ASSET
     
-#     dataset = load_dataset('asset', split='validation[:20%]', 'test[:10%]')
+    dataset = load_dataset('asset', split='validation[:20%]', 'test[:10%]')
     
-#     # test_dataset = WikiDataset(kwargs['base_path']+kwargs['src_test'], kwargs['base_path']+kwargs['tgt_test'], ref=False)
-#     test_dl = DataLoader(dataset, batch_size=TRAIN_BATCH_SIZE, collate_fn=collate_fn)
-#     test_start_time = time.time()
-#     test_loss, bleu_score, sari_score = evaluate(test_dl, 0)
-#     test_loss = test_loss/TRAIN_BATCH_SIZE
-#     print(f'Avg. eval loss: {test_loss:.5f} | blue score: {bleu_score} | sari score: {sari_score} | time elapsed: {time.time() - test_start_time}')
-#     # logging.info(f'Avg. eval loss: {test_loss:.5f} | blue score: {bleu_score} | sari score: {sari_score} | time elapsed: {time.time() - test_start_time}')
-#     print("Test Complete!")
+    test_dl = DataLoader(dataset, batch_size=TRAIN_BATCH_SIZE, collate_fn=collate_fn)
+    test_start_time = time.time()
+    test_loss, bleu_score, sari_score = evaluate(test_dl, 0)
+    test_loss = test_loss/TRAIN_BATCH_SIZE
+    print(f'Avg. eval loss: {test_loss:.5f} | blue score: {bleu_score} | sari score: {sari_score} | time elapsed: {time.time() - test_start_time}')
+    # logging.info(f'Avg. eval loss: {test_loss:.5f} | blue score: {bleu_score} | sari score: {sari_score} | time elapsed: {time.time() - test_start_time}')
+    print("Test Complete!")
 
 
 # @task.command()
